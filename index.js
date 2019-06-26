@@ -13,14 +13,20 @@ var feedback = require('./routes/models/feedback')
 var places = require('./routes/models/placesToVisit')
 var users = require('./routes/models/users')
 var question = require('./routes/models/question')
+var jwt = require('jsonwebtoken');
+
+var passport = require("passport");
+var passportJWT = require("passport-jwt");
+require('./routes/helper/passport')(passport);
 var restraunts = require('./routes/models/restraunts')
 var nodemailer = require('nodemailer');
 
 var app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(session({ secret: 'iamawesomeandikonwit', saveUninitialized: true, resave: false }));
+app.use(session({ secret: config.sessionSecret, saveUninitialized: true, resave: false }));
 app.use(cookieParser());
 
 app.set("view engine", "ejs");
@@ -76,10 +82,42 @@ app.route('/signup')
             }
         })
     })
+var token = '';
+app.route('/login')
+    .get(function (req, res, next) {
+        res.render('login', { message: '' })
+    })
+    .post(function (req, res, next) {
+        console.log(req.body);
+        users.userModel.findOne({ username: req.body.username }, function (err, doc) {
+            if (err)
+                throw err;
+            if (doc != null) {
+                if (doc.password === req.body.password) {
+                    req.session.username = req.body.username;
+                    var payload = {
+                        username: doc.username,
+                        password: doc.password,
+                        email: doc.email
+                    }
 
-app.get('/login', function (req, res, next) {
-    res.render('login', { message: '' })
-})
+                    token = jwt.sign(payload, config.secretOrKey);
+                    res.cookie('jwt', token);
+                    console.log('jwt-token:', token);
+
+                    res.redirect('/dashboard');
+                }
+                else {
+                    console.log('Invalid Credentials');
+                    res.render('login', { message: 'Invalid Credentials' });
+                }
+            }
+            else {
+                console.log('User not found');
+                res.render('login', { message: 'User not found ' });
+            }
+        })
+    })
 
 function createOTP() {
     var temp = Math.random();
@@ -147,53 +185,31 @@ app.route('/changePass')
         res.redirect('/login');
     })
 
-app.route('/dashboard')
-    .get(async function (req, res, next) {
-        var res1 = await new Promise(function (resolve, reject) {
-            question.qnaModel.find({}, function (err, ques) {
-                if (err)
-                    throw err;
-                else {
-                    resolve(ques);
-                }
-            }).sort({ timestamp: -1 });
-        })
-
-        var res2 = await new Promise(function (resolve, reject) {
-            story.storyModel.find({}, function (err, story) {
-                if (err)
-                    throw err;
-                else {
-                    resolve(story);
-                }
-            }).sort({ timestamp: -1 }).limit(5);
-        })
-        res.render('dashboard', { username: req.session.username, data: res1, story: res2 });
-    })
-    .post(function (req, res, next) {
-        console.log(req.body);
-        users.userModel.findOne({ username: req.body.username }, function (err, doc) {
+app.get('/dashboard', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+    var res1 = await new Promise(function (resolve, reject) {
+        question.qnaModel.find({}, function (err, ques) {
             if (err)
-                console.log(err);
-            if (doc != null) {
-                if (doc.password === req.body.password) {
-                    req.session.username = req.body.username;
-                    res.redirect('/dashboard');
-                }
-                else {
-                    console.log('Invalid Credentials');
-                    res.render('login', { message: 'Invalid Credentials' });
-                }
-            }
+                throw err;
             else {
-                console.log('User not found');
-                res.render('login', { message: 'User not found ' });
+                resolve(ques);
             }
-        })
+        }).sort({ timestamp: -1 });
     })
 
+    var res2 = await new Promise(function (resolve, reject) {
+        story.storyModel.find({}, function (err, story) {
+            if (err)
+                throw err;
+            else {
+                resolve(story);
+            }
+        }).sort({ timestamp: -1 }).limit(5);
+    })
+    res.render('dashboard', { username: req.session.username, data: res1, story: res2, token: token });
+})
 
-app.get('/story', async function (req, res, next) {
+
+app.get('/story',passport.authenticate('jwt', { session: false }), async function (req, res, next) {
     var res1 = await new Promise(function (resolve, reject) {
         story.storyModel.find({}, function (err, story) {
             if (err)
@@ -217,7 +233,7 @@ app.get('/story', async function (req, res, next) {
     res.render('story', { story: res1, popular: res2 });
 })
 
-app.post('/getStory', async function (req, res, next) {
+app.post('/getStory',passport.authenticate('jwt', { session: false }), async function (req, res, next) {
     var res1 = await new Promise(function (resolve, reject) {
         story.storyModel.find({ topic: req.body.storyTitle }, function (err, oneStory) {
             if (err)
@@ -231,7 +247,7 @@ app.post('/getStory', async function (req, res, next) {
 })
 
 //For Extras Page
-app.get('/extras', async function (req, res, next) {
+app.get('/extras',passport.authenticate('jwt', { session: false }), async function (req, res, next) {
 
     var res1 = await new Promise((resolve, reject) => {
         tvshows.tvModel.find({}, function (err, tv) {
@@ -383,7 +399,7 @@ app.post('/answering', function (req, res, next) {
 
 
 //For Settings in Profile
-app.get('/profile', function (req, res, next) {
+app.get('/profile',passport.authenticate('jwt', { session: false }), function (req, res, next) {
     res.render('profile', { username: req.session.username, message: '' });
 })
 app.post('/updateUsername', function (req, res, next) {
@@ -442,13 +458,14 @@ app.post('/updatepassword', function (req, res, next) {
 
 
 //For logout
-app.get('/logout', function (req, res, next) {
+app.get('/logout', passport.authenticate('jwt', { session: false }), function (req, res, next) {
     req.session.destroy();
+    res.cookie('jwt','', { maxAge: 0});
     res.redirect('/');
 })
 
 app.route('/feedback')
-    .get(function (req, res, next) {
+    .get(passport.authenticate('jwt', { session: false }),function (req, res, next) {
         res.render('feedback');
     })
     .post(function (req, res, next) {

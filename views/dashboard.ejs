@@ -42,31 +42,30 @@
 
 <body>
 	<div class="container-fluid" style="width: 100%">
-		<div id="page-wrapper">
+			<div id="page-wrapper">
+
+					<!-- Header -->
+					<section id="header" class="wrapper">
 			
-			<!-- Header -->
-			<section id="header" class="wrapper">
-
-				<!-- Logo -->
-				<div id="logo">
-					<h1><a href="/dashboard" style="text-decoration: none">Dinghy</a></h1>
-					<p>Hello, <%= username %></p>
-
+						<!-- Logo -->
+						<div id="logo">
+							<h1><a href="/dashboard" style="text-decoration: none">Dinghy</a></h1>
+							<p>Hello, <%= username %></p>
+			
+						</div>
+			
+						<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li class="current"><a href="/extras">Extras</a></li>
+								<li><a href="/trivia">Trivia</a></li>
+								<li><a href="/talktosomeone">Talk to Someone</a></li>
+								<li><a href="/profile">Profile</a></li>
+								<li><a href="/logout">Logout</a></li>
+							</ul>
+						</nav>
+					</section>
 				</div>
-
-				<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li class="current"><a href="/extras">Extras</a></li>
-						<li><a href="/trivia">Trivia</a></li>
-						<li><a href="/talktosomeone">Talk to Someone</a></li>
-						<li><a href="/profile">Profile</a></li>
-						<li><a href="/logout">Logout</a></li>
-					</ul>
-				</nav>
-			</section>
-		</div>
-
 		<div class="row">
 			<div class="col-md-3">
 				<br><br><br>
@@ -105,10 +104,10 @@
 							<tbody>
 								<% 
 									for(var i=0; i < story.length; i++) { %>
-										<tr>
-											<td><%= story[i].topic %></td>
-										</tr>
-									<%}	
+								<tr>
+									<td><%= story[i].topic %></td>
+								</tr>
+								<%}	
 								%>
 							</tbody>
 						</table>
@@ -169,6 +168,16 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+	<script src="/public/js/main.js"></script>
+	<script src="/public/js/script.js"></script>
+	<script src="/public/js/util.js"></script>
+	<script src="/public/js/breakpoints.min.js"></script>
+	<script src="/public/js/browser.min.js"></script>
+	<script src="/public/js/jquery.min.js"></script>
+
+
+
+
 </body>
 
 </html>

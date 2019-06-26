@@ -1,5 +1,6 @@
 {
     "dbURL":"mongodb+srv://powerfist01:helloworld@dinghy-gzkc6.mongodb.net/test?retryWrites=true",
     "sessionSecret":"AHSJSJAOSOXASDFGHJKLLLJGFSSDFGHJGFDFGHBGHHBHNHN",
-    "host": ""
+    "host": "",
+    "secretOrKey": "IAMSEXYANDIKNOWITANDYOUSHOULDALSOKNOWIT"
 }
