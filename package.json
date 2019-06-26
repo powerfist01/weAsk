@@ -1,7 +1,7 @@
 {
-  "name": "quizup",
+  "name": "weAsk",
   "version": "0.0.1",
-  "description": "\"Quiz Based App for YOU\"",
+  "description": "\"QnA Portal for you\"",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
