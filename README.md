@@ -1,2 +1,14 @@
-# weAsk
-A Question and Answer Portal for all your major problems
+weAsk
+=============
+
+### Features
+
+- A Question and Answer portal for you
+
+**Technologies Used**
+# Nodejs
+# Javascript
+# Ajax
+# JSON
+And Much More...
+
