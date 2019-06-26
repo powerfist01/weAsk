@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Dinghy</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="Cache-Control" content="no-store" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="icon" href="../images/boat.png" type="image/x-icon">
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"
+		rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<style>
+		#plus {
+			cursor: pointer;
+			color: blueviolet;
+		}
+
+		#plusRest {
+			cursor: pointer;
+			color: red;
+		}
+
+		#plusPlace {
+			cursor: pointer;
+			color: maroon;
+		}
+
+		#plusMovie {
+			cursor: pointer;
+			color: forestgreen;
+		}
+	</style>
+	<script>
+
+		$(document).ready(function () {
+			$('#plus').click(function () {
+				$(this).hide();
+				$('#tvShowInput').show();
+				$('#tvShowButt').show();
+			})
+
+			$('#plusRest').click(function () {
+				$(this).hide();
+				$('#restInput').show();
+				$('#restButt').show();
+			})
+
+			$('#plusPlace').click(function () {
+				$(this).hide();
+				$('#placeInput').show();
+				$('#placeButt').show();
+			})
+
+			$('#plusMovie').click(function () {
+				$(this).hide();
+				$('#movieInput').show();
+				$('#movieButt').show();
+			})
+		})
+	</script>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4" style="text-align: center;" >
+					<a href="/dashboard" style="text-decoration:none">Dinghy</a>
+			</div>
+
+			<div class="col-md-4"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card border-dark mb-3" style="max-width: 18rem;">
+					<div class="card-body text-dark" style="text-align: center;">
+						<h5 class="card-title"><a href="/extras"
+								style="text-decoration-color: none; text-decoration:none;">Trending TV Shows</a></h5>
+						<table class="table table-striped" style="text-align: center">
+							<tbody>
+								<% for(var i=0; i < tvShows.length; i++) { %>
+								<tr>
+									<td><%= tvShows[i].name %></td>
+								</tr>
+								<%}	
+								%>
+							</tbody>
+						</table>
+						<form action="/addTvShow" method="POST">
+							<h1 style="text-align: center"><i id="plus" class="icon-plus-sign"></i></h1>
+							<input style="display: none;" type="text" name="showName" id="tvShowInput" required>
+							<input style="display: none;" type="submit" id="tvShowButt" value="Add">
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="card border-dark mb-3" style="max-width: 18rem;">
+					<div class="card-body text-dark" style="text-align: center;">
+						<h5 class="card-title"><a href="/extras"
+								style="text-decoration-color: none; text-decoration:none;">Restraunts Near
+								You</a></h5>
+						<table class="table table-striped" style="text-align: center">
+							<tbody>
+								<% for(var i=0; i < restraunts.length; i++) { %>
+								<tr>
+									<td><%= restraunts[i].name %></td>
+								</tr>
+									<%}	
+								%>
+							</tbody>
+						</table>
+						<form action="/addRestraunt" method="POST">
+							<h1 style="text-align: center"><i id="plusRest" class="icon-plus-sign"></i></h1>
+							<input style="display: none;" type="text" name="restName" id="restInput" required>
+							<input style="display: none;" type="submit" id="restButt" value="Add">
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-3">
+				<div class="card border-dark mb-3" style="max-width: 18rem;">
+					<div class="card-body text-dark" style="text-align: center;">
+						<h5 class="card-title"><a href="/extras"
+								style="text-decoration-color: none; text-decoration:none;">Places to Visit</a></h5>
+						<table class="table table-striped" style="text-align: center">
+							<tbody>
+								<% for(var i=0; i < places.length; i++) { %>
+								<tr>
+									<td><%= places[i].name %></td>
+								</tr>
+									<%}	
+								%>
+							</tbody>
+						</table>
+						<form action="/addPlaces" method="POST">
+							<h1 style="text-align: center"><i id="plusPlace" class="icon-plus-sign"></i></h1>
+							<input style="display: none;" type="text" name="placeName" id="placeInput" required>
+							<input style="display: none;" type="submit" id="placeButt" value="Add">
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="card border-dark mb-3" style="max-width: 18rem;">
+					<div class="card-body text-dark" style="text-align: center;">
+						<h5 class="card-title"><a href="/extras"
+								style="text-decoration-color: none; text-decoration:none;">Trending Movies</a></h5>
+						<table class="table table-striped" style="text-align: center">
+							<tbody>
+								<% for(var i=0; i < movies.length; i++) { %>
+								<tr>
+									<td><%= movies[i].name %></td>
+								</tr>
+									<%}	
+								%>
+							</tbody>
+						</table>
+						<form action="/addMovies" method="POST">
+							<h1 style="text-align: center"><i id="plusMovie" class="icon-plus-sign"></i></h1>
+							<input style="display: none;" type="text" name="movieName" id="movieInput" required>
+							<input style="display: none;" type="submit" id="movieButt" value="Add">
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+</html>

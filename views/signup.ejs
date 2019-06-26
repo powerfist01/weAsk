@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dinghy - SignUp</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+	<link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" type="text/css" href="../css/style1.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+	<link rel="icon" href="../images/boat.png" type="image/x-icon">
+
+</head>
+<body>
+	<div class="main-w3layouts wrapper" style="padding-top: 0%">
+		<div class="main-agileinfo" id="just">
+			<div class="agileits-top">
+				<form action="/signup" method="post" style="padding-top: 0%; padding-bottom:0%">
+					<input class="text" type="text" name="username" placeholder="Username" required>
+					<input class="text email" type="text" name="name" placeholder="Fullname" required>
+					<input class="text email" type="email" name="email" placeholder="Email" required>
+					<input class="text email" type="text" name="rollno" placeholder="RollNo" required>
+					<input class="text email" type="text" name="branch" placeholder="Branch" required>
+					<input class="text" type="password" name="password" placeholder="Password" required>
+					<br>
+					<div class="wthree-text">
+						<label class="anim">
+							<input type="checkbox" class="checkbox" required="">
+							<span>I Agree To The Terms & Conditions</span>
+						</label>
+						<div class="clear"> </div>
+					</div>
+					<input type="submit" value="SIGNUP">
+				</form>
+				<p><strong>Already have an Account?</strong> <a href="/login" style="text-decoration: none;"> <strong>Login Here</strong></a><strong>!</strong></p>
+			</div>
+		</div>
+		<div class="colorlibcopy-agile">
+			<strong><p>&copy; 2019 Dinghy. No rights reserved | Designed and Developed by <a href="https://powerfist01.github.io/" style="text-decoration: none;">Sujeet Singh</a></strong> </p>
+		</div>
+		<ul class="colorlib-bubbles">
+			<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+		</ul>
+		<%if (message.length > 0) { %>
+            <script>
+                alert('Username already exists!');
+            </script>
+        <% } %>
+	</div>
+	<!-- //main -->
+	<script type="text/javascript" src="../js/script.js"></script>
+</body>
+</html>

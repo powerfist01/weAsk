@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dinghy - Log In</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="../css/style1.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+	<link rel="icon" href="../images/boat.png" type="image/x-icon">
+	<style>
+		#forgot:hover{
+			color: aqua;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid" style="width: 100%; height: 100%; padding-top:3em">
+		<ul class="colorlib-bubbles">
+			<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+		</ul>
+		<div class="main wrapper" style="width: 100%; height: 100%;">
+			<div class="main-agileinfo">
+				<div class="agileits-top">
+					<form action="/dashboard" method="post">
+						<input class="text" type="text" name="username" placeholder="Username" required="">
+						<input class="password phone" type="password" name="password" placeholder="Password" required="">
+						<input type="submit" value="Log In">
+                    </form>
+                    <section>
+						<p style="padding-right: 200px"><a href="/forgotPass" style="text-decoration: none; color: black;"><strong id="forgot">Forgot Password</strong></a></p>
+						<strong>Don't have an account?</strong>
+						<a href="/signup" style="text-decoration:none;"><strong> Sign up Here </strong></a><strong>!</strong>
+                    </section>
+				</div>
+			</div>
+		</div>
+		
+        <%if (message.length > 0) { %>
+            <script>
+                alert('Invalid Credentials!');
+            </script>
+		<% } %>
+		<div class="colorlibcopy-agile">
+			<strong><p>&copy; 2019 Dinghy. No rights reserved | Designed and Developed by <a href="https://powerfist01.github.io/" style="text-decoration: none;">Sujeet Singh</a></strong> </p>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/script.js"></script>
+</body>
+</html>

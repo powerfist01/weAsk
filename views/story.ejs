@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Story</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="icon" href="../images/boat.png" type="image/x-icon">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"
+        rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.item').click(function () {
+                var obj = {
+                    storyTitle: this.innerText
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var data = JSON.parse(this.responseText);  
+                        $('#content').text(data[0].content);                      
+                    }
+                };
+                xhr.open('POST', '/getStory', true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify(obj));
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row" style="background-color:grey; height: 40px;">
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4" style="text-align: center; padding-top: 5px;">
+                <a href="/dashboard" style="text-decoration:none;"><strong style="font-size: 20px">Dinghy</strong></a>
+            </div>
+
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="card border-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-body text-dark" style="text-align: center;">
+                        <h5 class="card-title"><a href="/extras"
+                                style="text-decoration-color: none; text-decoration:none;">Stories</a></h5>
+                        <table class="table table-striped" style="text-align: center">
+                            <tbody>
+                                <% for(var i=0; i < story.length; i++) 
+                                    { %>
+                                <tr>
+                                    <td><a href="#" style="text-decoration: none;"
+                                            class="item"><%= story[i].topic %></a></td>
+                                </tr>
+                                <%}	
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9" style="background-color: cadetblue;">
+                <p id="content">Click on the stories you want to read</p>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
