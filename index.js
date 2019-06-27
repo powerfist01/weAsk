@@ -208,6 +208,13 @@ app.get('/dashboard', passport.authenticate('jwt', { session: false }), async fu
     res.render('dashboard', { username: req.session.username, data: res1, story: res2, token: token });
 })
 
+app.get('/trivia', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+    res.sendStatus(404);
+})
+
+app.get('/talktosomeone', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+    res.sendStatus(404);
+})
 
 app.get('/story',passport.authenticate('jwt', { session: false }), async function (req, res, next) {
     var res1 = await new Promise(function (resolve, reject) {
