@@ -42,30 +42,31 @@
 
 <body>
 	<div class="container-fluid" style="width: 100%">
-			<div id="page-wrapper">
+		<div id="page-wrapper">
 
-					<!-- Header -->
-					<section id="header" class="wrapper">
-			
-						<!-- Logo -->
-						<div id="logo">
-							<h1><a href="/dashboard" style="text-decoration: none">weAsk</a></h1>
-							<p>Hello, <%= username %></p>
-			
-						</div>
-			
-						<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li class="current"><a href="/extras">Extras</a></li>
-								<li><a href="/trivia">Trivia</a></li>
-								<li><a href="/talktosomeone">Talk to Someone</a></li>
-								<li><a href="/profile">Profile</a></li>
-								<li><a href="/logout">Logout</a></li>
-							</ul>
-						</nav>
-					</section>
+			<!-- Header -->
+			<section id="header" class="wrapper">
+
+				<!-- Logo -->
+				<div id="logo">
+					<h1><a href="/dashboard" style="text-decoration: none">weAsk</a></h1>
+					<p>Hello, <%= username %></p>
+
 				</div>
+
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li class="current"><a href="/extras">Extras</a></li>
+						<li><a href="/trivia">Trivia</a></li>
+						<li><a href="/talktosomeone">Talk to Someone</a></li>
+						<li><a href="/profile">Profile</a></li>
+						<li><a href="/logout">Logout</a></li>
+					</ul>
+				</nav>
+			</section>
+		</div>
+
 		<div class="row">
 			<div class="col-md-3">
 				<br><br><br>
@@ -92,8 +93,8 @@
 					<button id="post">Post</button>
 				</form>
 			</div>
-
 		</div>
+
 		<div class="row">
 			<div class="col-md-3">
 				<div class="card border-dark mb-3">
@@ -111,18 +112,12 @@
 								%>
 							</tbody>
 						</table>
-						<form action="/addTvShow" method="POST">
-							<h1 style="text-align: center"><i id="plus" class="icon-plus-sign"></i></h1>
-							<input style="display: none;" type="text" name="showName" id="tvShowInput" required>
-							<input style="display: none;" type="submit" id="tvShowButt" value="Add">
-						</form>
 					</div>
 				</div>
-
 			</div>
+
 			<div class="col-md-9">
 				<div class="allData">
-
 					<% for(var i=0; i < data.length; i++) { %>
 					<div class="card border-success mb-3" style="max-width: 60rem;">
 						<div class="card-header bg-transparent border-success"><%= data[i].questioner %></div>
@@ -154,6 +149,9 @@
 					</div>
 					<% } %>
 				</div>
+			</div>
+			<div class="col-md-3">
+				somethiing something 
 			</div>
 		</div>
 	</div>
