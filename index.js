@@ -55,7 +55,14 @@ db.once('open', function () {
 })
 
 app.get('/', function (req, res, next) {
-    res.render('index');
+    var token = req.cookies['jwt'];
+    if (token) {
+        var decoded = jwt.decode(token, { complete: true });
+        req.session.username = decoded.payload.username;
+        res.redirect('/dashboard');
+    }
+    else
+        res.render('index');
 })
 
 app.route('/signup')
@@ -216,7 +223,7 @@ app.get('/talktosomeone', passport.authenticate('jwt', { session: false }), asyn
     res.sendStatus(404);
 })
 
-app.get('/story',passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+app.get('/story', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
     var res1 = await new Promise(function (resolve, reject) {
         story.storyModel.find({}, function (err, story) {
             if (err)
@@ -240,7 +247,7 @@ app.get('/story',passport.authenticate('jwt', { session: false }), async functio
     res.render('story', { story: res1, popular: res2 });
 })
 
-app.post('/getStory',passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+app.post('/getStory', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
     var res1 = await new Promise(function (resolve, reject) {
         story.storyModel.find({ topic: req.body.storyTitle }, function (err, oneStory) {
             if (err)
@@ -254,7 +261,7 @@ app.post('/getStory',passport.authenticate('jwt', { session: false }), async fun
 })
 
 //For Extras Page
-app.get('/extras',passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+app.get('/extras', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
 
     var res1 = await new Promise((resolve, reject) => {
         tvshows.tvModel.find({}, function (err, tv) {
@@ -406,7 +413,7 @@ app.post('/answering', function (req, res, next) {
 
 
 //For Settings in Profile
-app.get('/profile',passport.authenticate('jwt', { session: false }), function (req, res, next) {
+app.get('/profile', passport.authenticate('jwt', { session: false }), function (req, res, next) {
     res.render('profile', { username: req.session.username, message: '' });
 })
 app.post('/updateUsername', function (req, res, next) {
@@ -467,12 +474,12 @@ app.post('/updatepassword', function (req, res, next) {
 //For logout
 app.get('/logout', passport.authenticate('jwt', { session: false }), function (req, res, next) {
     req.session.destroy();
-    res.cookie('jwt','', { maxAge: 0});
+    res.cookie('jwt', '', { maxAge: 0 });
     res.redirect('/');
 })
 
 app.route('/feedback')
-    .get(passport.authenticate('jwt', { session: false }),function (req, res, next) {
+    .get(passport.authenticate('jwt', { session: false }), function (req, res, next) {
         res.render('feedback');
     })
     .post(function (req, res, next) {
