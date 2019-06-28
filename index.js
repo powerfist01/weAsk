@@ -5,20 +5,19 @@ var bodyParser = require('body-parser');
 var config = require('./config/config.js');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-require('dotenv').config()
-var tvshows = require('./routes/models/tvshows')
-var story = require('./routes/models/story')
-var movies = require('./routes/models/movies')
-var feedback = require('./routes/models/feedback')
-var places = require('./routes/models/placesToVisit')
-var users = require('./routes/models/users')
-var question = require('./routes/models/question')
+require('dotenv').config();
+var tvshows = require('./routes/models/tvshows');
+var story = require('./routes/models/story');
+var movies = require('./routes/models/movies');
+var feedback = require('./routes/models/feedback');
+var places = require('./routes/models/placesToVisit');
+var users = require('./routes/models/users');
+var question = require('./routes/models/question');
 var jwt = require('jsonwebtoken');
 
 var passport = require("passport");
-var passportJWT = require("passport-jwt");
 require('./routes/helper/passport')(passport);
-var restraunts = require('./routes/models/restraunts')
+var restraunts = require('./routes/models/restraunts');
 var nodemailer = require('nodemailer');
 
 var app = express();
@@ -89,10 +88,19 @@ app.route('/signup')
             }
         })
     })
+
 var token = '';
 app.route('/login')
     .get(function (req, res, next) {
-        res.render('login', { message: '' })
+        var token = req.cookies['jwt'];
+        if (token) {
+            var decoded = jwt.decode(token, { complete: true });
+            req.session.username = decoded.payload.username;
+            res.redirect('/dashboard');
+        }
+        else {
+            res.render('login', { message: '' })
+        }
     })
     .post(function (req, res, next) {
         console.log(req.body);
@@ -110,8 +118,6 @@ app.route('/login')
 
                     token = jwt.sign(payload, config.secretOrKey);
                     res.cookie('jwt', token);
-                    console.log('jwt-token:', token);
-
                     res.redirect('/dashboard');
                 }
                 else {
@@ -131,12 +137,12 @@ function createOTP() {
     temp = temp * 10000;
     temp = Math.floor(temp);
     temp = temp.toString();
-    if (temp.length == 1)
-        temp += '000';
-    else if (temp.length == 2)
-        temp += '00';
-    else if (temp.length == 3)
-        temp += '0';
+    while (temp.length == 1 || temp.length == 2 || temp.length == 3) {
+        temp = Math.random();
+        temp = temp * 10000;
+        temp = Math.floor(temp);
+        temp = temp.toString();
+    }
     return temp;
 }
 
@@ -147,13 +153,20 @@ app.route('/forgotPass')
         res.render('forgot', { message: '' })
     })
     .post(function (req, res, next) {
+        users.userModel.findOne({email:req.body.id},function(err,user){
+            if(err)
+                throw err;
+            if(!user){
+                console.log('User not found!');
+                var msg = 'User email not found!';
+                res.render('forgot', { message: msg });
+            }
+        })
         OTP = createOTP();
-        emailId = req.body.id;
-
         var mailOptions = {
             from: 'noreply@gmail.com',
             to: req.body.id,
-            subject: 'Your OTP will expire in 10 minutes.',
+            subject: 'Your OTP will expire in 10 minutes,not really :).',
             text: OTP
         };
 
@@ -216,11 +229,11 @@ app.get('/dashboard', passport.authenticate('jwt', { session: false }), async fu
 })
 
 app.get('/trivia', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
-    res.sendStatus(404);
+    res.render('comingsoon');
 })
 
 app.get('/talktosomeone', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
-    res.sendStatus(404);
+    res.render('comingsoon');
 })
 
 app.get('/story', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
@@ -417,8 +430,7 @@ app.get('/profile', passport.authenticate('jwt', { session: false }), function (
     res.render('profile', { username: req.session.username, message: '' });
 })
 app.post('/updateUsername', function (req, res, next) {
-    console.log(req.body);
-    console.log(req.session.username);
+    
     users.userModel.findOne({ username: req.body.username }, function (err, doc) {
         if (err)
             console.log(err);
@@ -454,7 +466,6 @@ app.post('/updatepassword', function (req, res, next) {
 })
 
 //For image Uploads using multer
-
 // const upload = multer({
 //     dest: "/home/powerfist01/Dinghy/uploads"
 // });

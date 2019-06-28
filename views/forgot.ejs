@@ -16,7 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#butt').click(function(){
+            $('#butt').click(function(e){
                 $('#formOTP').show();
             })
         })
@@ -42,10 +42,10 @@
 		<div class="colorlibcopy-agile">
 			<strong><p>&copy; 2019 weAsk. No rights reserved | Designed and Developed by <a href="https://powerfist01.github.io/" style="text-decoration: none;">Sujeet Singh</a></strong> </p>
 		</div>
-		
+		<p id="para" style="display: none;"><%= message %></p>
 		<%if (message.length > 0) { %>
             <script>
-                alert('Wrong OTP!');
+                alert($('#para').text());
             </script>
         <% } %>
         <ul class="colorlib-bubbles">
