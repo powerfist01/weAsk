@@ -14,6 +14,18 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
+	<style>
+		.container-fluid {
+			padding-right: 0px;
+			padding-left: 0px;
+			margin-right: auto;
+			margin-left: auto;
+		}
+
+		body {
+			overflow-x: hidden;
+		}
+	</style>
 	<script>
 		$(document).ready(function () {
 			$('.ansButton').click(function () {
@@ -54,7 +66,8 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" href="/dashboard" style="color: crimson;">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="/dashboard" style="color: crimson;">Home <span
+								class="sr-only">(current)</span></a>
 					</li>&nbsp;&nbsp;
 					<li class="nav-item">
 						<a class="nav-link" href="/extras" style="color: crimson;">Extras</a>
@@ -78,97 +91,100 @@
 				</ul>
 			</div>
 		</nav>
-			<div class="row">
-				<div class="col-md-3">
-					<div>
-						<h3>Hello,<strong style="color: blueviolet;"><%= username %></strong></h3>
-						<p>Hope you are doing well.</p>
-					</div>
-					
-					<div class="list-group" id="list-tab" role="tablist">
-						<a class="list-group-item list-group-item-action active" id="ques" data-toggle="list"
-							href="#list-messages" role="tab" aria-controls="messages">Question</a>
-						<a class="list-group-item list-group-item-action" id="st" data-toggle="list"
-							href="#list-settings" role="tab" aria-controls="settings">Story</a>
-					</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div>
+					<h3>Hello,<strong style="color: blueviolet;"><%= username %></strong></h3>
+					<p>Hope you are doing well.</p>
 				</div>
-				<div class="col-md-9">
-					<form method="POST" action="/posting" id="question">
-						<label for="comment" style="font-size: 25px; font-style:oblique">Question:</label>
-						<textarea class="form-control" name="question" rows="5" spellcheck="false" required></textarea>
-						<br>
-						<button id="post">Post</button>
-					</form>
-					<form method="POST" action="/storyPost" id="story" style="display: none;">
-						<label for="comment" style="font-size: 25px; font-style:oblique">Story:</label>
-						<input type="text" placeholder="Topic" name="topic" style="color: black;" required>
-						<br>
-						<textarea class="form-control" name="content" rows="5" spellcheck="false" required></textarea>
-						<br>
-						<button id="post">Post</button>
-					</form>
+
+				<div class="list-group" id="list-tab" role="tablist">
+					<a class="list-group-item list-group-item-action active" id="ques" data-toggle="list"
+						href="#list-messages" role="tab" aria-controls="messages">Question</a>
+					<a class="list-group-item list-group-item-action" id="st" data-toggle="list" href="#list-settings"
+						role="tab" aria-controls="settings">Story</a>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<form method="POST" action="/posting" id="question">
+					<label for="comment" style="font-size: 25px; font-style:oblique">Question:</label>
+					<textarea class="form-control" name="question" rows="5" spellcheck="false" required></textarea>
 					<br>
-				</div>
+					<button id="post">Post</button>
+				</form>
+				<form method="POST" action="/storyPost" id="story" style="display: none;">
+					<label for="comment" style="font-size: 25px; font-style:oblique">Story:</label>
+					<input type="text" placeholder="Topic" name="topic" style="color: black;" required>
+					<br>
+					<textarea class="form-control" name="content" rows="5" spellcheck="false" required></textarea>
+					<br>
+					<button id="post">Post</button>
+				</form>
+				<br>
 			</div>
+		</div>
 
-			<div class="row">
-				<div class="col-md-3">
-					<div class="card border-dark mb-3">
-						<div class="card-body text-dark" style="text-align: center;">
-							<h5 class="card-title"><a href="/story"
-									style="text-decoration-color: none; text-decoration:none;">Latest Stories</a></h5>
-							<table class="table table-striped" style="text-align: center">
-								<tbody>
-									<% 
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card border-dark mb-3">
+					<div class="card-body text-dark" style="text-align: center;">
+						<h5 class="card-title"><a href="/story"
+								style="text-decoration-color: none; text-decoration:none;">Latest Stories</a></h5>
+						<table class="table table-striped" style="text-align: center">
+							<tbody>
+								<% 
 									for(var i=0; i < story.length; i++) { %>
-									<tr>
-										<td><%= story[i].topic %></td>
-									</tr>
-									<%}	
+								<tr>
+									<td><%= story[i].topic %></td>
+								</tr>
+								<%}	
 								%>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-9">
-					<div class="allData">
-						<% for(var i=0; i < data.length; i++) { %>
-						<div class="card border-success mb-3">
-							<div class="card-header bg-transparent border-success"><%= data[i].questioner %></div>
-							<div class="card-body text-success">
-								<h5 class="card-title" style="color: darkred">Q. <strong style="color: darkred;"><%= data[i].question %></strong></h5>
-								<% if(data[i].answer.length > 0){ %>
-								<% for(var j=0; j < data[i].answer.length; j++) { %>
-								<p style="color: black;"><strong style="color: darkslateblue;"><%= data[i].answerer[j] %></strong>:&nbsp;<%= data[i].answer[j] %></p>
-								<% }
-									%>
-								<form method="POST" action="/answering">
-									<input style="display: none" type="text" name="questionId" value=<%= data[i]._id %>>
-									<textarea style="display: none" class="form-control" name="answer" rows="5"
-										spellcheck="false" required id=<%=i%>ansArea></textarea>
-									<input style="display: none" type="submit" name="saveButton" value="Save"
-										id=<%=i%>saveAns>
-								</form>
-								<% } else{ %>
-								<form method="POST" action="/answering">
-									<input style="display: none" type="text" name="questionId" value=<%= data[i]._id %>>
-									<textarea style="display: none" class=" form-control" name="answer" rows="5"
-										spellcheck="false" required id=<%=i%>ansArea></textarea>
-									<input style="display: none" type="submit" name="saveButton" value="Save"
-										id=<%=i%>saveAns>
-								</form>
-								<% } %>
-								<button class='ansButton' style="color: black;" id=<%=i%>>Write Your Answer</button>
-							</div>
-						</div>
-						<% } %>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 
-	
+			<div class="col-md-9">
+				<div class="allData">
+					<% for(var i=0; i < data.length; i++) { %>
+					<div class="card border-success mb-3">
+						<div class="card-header bg-transparent border-success"><%= data[i].questioner %></div>
+						<div class="card-body text-success">
+							<h5 class="card-title" style="color: darkred">Q. <strong
+									style="color: darkred;"><%= data[i].question %></strong></h5>
+							<% if(data[i].answer.length > 0){ %>
+							<% for(var j=0; j < data[i].answer.length; j++) { %>
+							<p style="color: black;"><strong
+									style="color: darkslateblue;"><%= data[i].answerer[j] %></strong>:&nbsp;<%= data[i].answer[j] %>
+							</p>
+							<% }
+									%>
+							<form method="POST" action="/answering">
+								<input style="display: none" type="text" name="questionId" value=<%= data[i]._id %>>
+								<textarea style="display: none" class="form-control" name="answer" rows="5"
+									spellcheck="false" required id=<%=i%>ansArea></textarea>
+								<input style="display: none" type="submit" name="saveButton" value="Save"
+									id=<%=i%>saveAns>
+							</form>
+							<% } else{ %>
+							<form method="POST" action="/answering">
+								<input style="display: none" type="text" name="questionId" value=<%= data[i]._id %>>
+								<textarea style="display: none" class=" form-control" name="answer" rows="5"
+									spellcheck="false" required id=<%=i%>ansArea></textarea>
+								<input style="display: none" type="submit" name="saveButton" value="Save"
+									id=<%=i%>saveAns>
+							</form>
+							<% } %>
+							<button class='ansButton' style="color: black;" id=<%=i%>>Write Your Answer</button>
+						</div>
+					</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
