@@ -20,16 +20,34 @@
         $(document).ready(function () {
             $('.item').click(function () {
                 var obj = {
-                    storyTitle: this.innerText
+                    storyTitle: this.innerText,
+                    storyId: this.id
                 }
-                var xhr = new XMLHttpRequest(); 
+                var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        var data = JSON.parse(this.responseText);  
-                        $('#content').text(data[0].content);                      
+                        var data = JSON.parse(this.responseText);
+                        $('#content').text(data[0].content);
                     }
                 };
                 xhr.open('POST', '/getStory', true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify(obj));
+            })
+
+            $('#upvoteButt').click(function(){
+                var xhr = new XMLHttpRequest();
+                var obj = {
+                    issue: "story"
+                }
+                xhr.onreadystatechange = function () {
+                    console.log(this.responseText);
+                    if (this.readyState == 4 && this.status == 200) {
+                        $('#'+this.responseText.title).fadeOut();
+                        
+                    }
+                };
+                xhr.open('POST', '/upvote', true);
                 xhr.setRequestHeader("Content-type", "application/json");
                 xhr.send(JSON.stringify(obj));
             })
@@ -54,14 +72,15 @@
             <div class="col-md-3">
                 <div class="card border-dark mb-3" style="max-width: 18rem;">
                     <div class="card-body text-dark" style="text-align: center;">
-                        <h5 class="card-title"><a href="/extras"
-                                style="text-decoration-color: none; text-decoration:none;">Stories</a></h5>
+                        <h5 class="card-title">Stories</h5>
                         <table class="table table-striped" style="text-align: center">
                             <tbody>
                                 <% for(var i=0; i < story.length; i++) 
                                     { %>
                                 <tr>
-                                    <td><a href="#" style="text-decoration: none;" class="item"><%= story[i].topic %></a></td>
+                                    <td><a style="text-decoration: none;" class="item" id=<%= story[i]._id%>
+                                            href=#<%= story[i].topic %> ><%= story[i].topic %></a></td>
+                                    <td><strong id=<%= story[i].topic %> ><%= story[i].votes %></strong></td>
                                 </tr>
                                 <%}	
                                 %>
@@ -71,10 +90,32 @@
                 </div>
             </div>
 
-            <div class="col-md-9" style="background-color: cadetblue;">
+            <div class="col-md-6" style="background-color: cadetblue;">
                 <p id="content">Click on the stories you want to read</p>
+                <div style="text-align:start;">
+                    <button id="upvoteButt">Upvote</button>
+                </div>
             </div>
 
+            <div class="col-md-3">
+                    <div class="card border-dark mb-3" style="max-width: 18rem;">
+                        <div class="card-body text-dark" style="text-align: center;">
+                            <h5 class="card-title">Trending Stories</h5>
+                            <table class="table table-striped" style="text-align: center">
+                                <tbody>
+                                    <% for(var i=0; i < popular.length; i++) { %>
+                                        <tr>
+                                            <td><a style="text-decoration: none;" class="item" id=<%= story[i]._id%>
+                                                    href=#<%= popular[i].topic %>><%= popular[i].topic %></a></td>
+                                            <td><strong><%= popular[i].votes %></strong></td>
+                                        </tr>
+                                    <%}	
+                                    %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
     </div>

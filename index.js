@@ -254,15 +254,38 @@ app.get('/story', passport.authenticate('jwt', { session: false }), async functi
             else {
                 resolve(story);
             }
-        }).sort({ timestamp: -1 });
+        }).sort({ votes: -1 });
     })
-
     res.render('story', { story: res1, popular: res2 });
 })
 
+app.post('/upvote',function(req,res,next){
+    var issue = req.body.issue;
+    console.log(issue);
+    if(issue == 'story'){
+        console.log('Here');
+        console.log(req.session.storyId);
+        story.storyModel.where({ _id: req.session.storyId }).updateOne({ $inc:{ votes: 1} }).exec();
+    }
+    story.storyModel.find({ _id: req.session.storyId },{_id:0, votes : 1}, function (err,vote){
+        if(err)
+            throw err;
+        else{
+            res.json({
+                vote: vote,
+                title: req.session.storyTitle
+            });
+        }
+    })
+})
+
 app.post('/getStory', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+    let topic = req.body.storyTitle;
+    req.session.storyTitle = topic;
+    req.session.storyId = req.body.storyId;
+
     var res1 = await new Promise(function (resolve, reject) {
-        story.storyModel.find({ topic: req.body.storyTitle }, function (err, oneStory) {
+        story.storyModel.find({ topic: topic }, function (err, oneStory) {
             if (err)
                 throw err;
             if (!oneStory)

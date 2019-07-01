@@ -7,7 +7,8 @@ const user = new Schema({
     name:String,
 	email: String,
     password: String,
-    branch: String
+    branch: String,
+    likedStories: Array
 }); 
 
 var userModel = mongoose.model('User', user);
