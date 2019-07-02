@@ -29,6 +29,10 @@
                         $('#content').text(data[0].content);
                         $('#totalLikes').text(data[0].votes);
                         $('#like').css({'font-size':'50px'});
+                    } else {
+                        $('#content').text('Loading...');
+                        $('#totalLikes').text('');
+                        $('#like').css({'font-size':'0px'});
                     }
                 };
                 xhr.open('POST', '/getStory', true);
