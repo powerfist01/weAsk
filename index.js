@@ -244,40 +244,60 @@ app.get('/story', passport.authenticate('jwt', { session: false }), async functi
             else {
                 resolve(story);
             }
-        }).sort({ timestamp: -1 });
+        }).sort({ votes: -1 }).limit(7);
     })
 
-    var res2 = await new Promise(function (resolve, reject) {
+    res.render('story', { story: res1});
+})
+
+app.get('/allStories',  async function (req, res, next) {
+    var res1 = await new Promise(function (resolve, reject) {
         story.storyModel.find({}, function (err, story) {
             if (err)
                 throw err;
             else {
                 resolve(story);
             }
-        }).sort({ votes: -1 });
+        });
     })
-    res.render('story', { story: res1, popular: res2 });
+    res.render('allPage', { story: res1});
 })
 
 app.post('/upvote',function(req,res,next){
     var issue = req.body.issue;
-    console.log(issue);
     if(issue == 'story'){
-        console.log('Here');
-        console.log(req.session.storyId);
         story.storyModel.where({ _id: req.session.storyId }).updateOne({ $inc:{ votes: 1} }).exec();
     }
     story.storyModel.find({ _id: req.session.storyId },{_id:0, votes : 1}, function (err,vote){
         if(err)
             throw err;
         else{
-            res.json({
+            res.json({  
                 vote: vote,
                 title: req.session.storyTitle
-            });
+            }); 
         }
     })
 })
+
+app.post('/downvote',function(req,res,next){
+    var issue = req.body.issue;
+    if(issue == 'story'){
+        story.storyModel.where({ _id: req.session.storyId }).updateOne({ $inc:{ votes: -1} }).exec();
+    }
+    story.storyModel.find({ _id: req.session.storyId },{_id:0, votes : 1}, function (err,vote){
+        if(err)
+            throw err;
+        else{
+            res.json({  
+                vote: vote,
+                title: req.session.storyTitle
+            }); 
+        }
+    })
+})
+
+
 
 app.post('/getStory', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
     let topic = req.body.storyTitle;

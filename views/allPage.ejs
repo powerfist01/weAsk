@@ -28,7 +28,7 @@
                         //console.log(data);
                         $('#content').text(data[0].content);
                         $('#totalLikes').text(data[0].votes);
-                        $('#like').css({'font-size':'50px'});
+                        $('#like').css({ 'font-size': '50px' });
                     }
                 };
                 xhr.open('POST', '/getStory', true);
@@ -41,12 +41,12 @@
                 if ($(this).css("color") == 'rgb(0, 0, 0)') {
                     $(this).css({ 'color': 'blue' });
                     var x = $('#totalLikes').text();
-                    $('#totalLikes').text(parseInt(x)+1);
+                    $('#totalLikes').text(parseInt(x) + 1);
                     var xhr = new XMLHttpRequest();
                     var obj = {
                         issue: "story"
                     }
-                
+
                     xhr.open('POST', '/upvote', true);
                     xhr.setRequestHeader("Content-type", "application/json");
                     xhr.send(JSON.stringify(obj));
@@ -54,7 +54,7 @@
                 else {
                     $(this).css({ 'color': 'black' });
                     var x = $('#totalLikes').text();
-                    $('#totalLikes').text(parseInt(x)-1);
+                    $('#totalLikes').text(parseInt(x) - 1);
                     var xhr = new XMLHttpRequest();
                     var obj = {
                         issue: "story"
@@ -91,36 +91,20 @@
                         <h5 class="card-title">Top Liked Stories</h5>
                         <table class="table table-striped" style="text-align: center">
                             <tbody>
-                                <% for(var i=0; i < story.length; i++) 
-                                    { %>
+                                <% for(var i=0; i < story.length; i++) { %>
                                 <tr>
                                     <td><a style="text-decoration: none;" class="item" id=<%= story[i]._id%>
                                             href=#<%= story[i].topic %>><%= story[i].topic %></a></td>
+                                    <td><strong><%= story[i].votes %></strong></td>
                                 </tr>
                                 <%}	
                                 %>
-                                <tr>
-                                    <td><a href="/allStories" style="text-decoration: none;"><strong>... more Stories</strong></a></td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-9" style="background-color: cadetblue;">
-                <p id="content">Click on the stories you want to read</p>
-                <div style="text-align:start;" class="row">
-                    <div class="col-md-1">
-                        <p id="totalLikes" style="font-size: 35px;"></p>
-                    </div>
-                    <div class="col-md-2">
-                        <i id="like" style="font-size:0px; color: black;" class="fa fa-thumbs-up"></i>
-                    </div>
-                    
-                </div>
-            </div>
-
         </div>
     </div>
     </div>
