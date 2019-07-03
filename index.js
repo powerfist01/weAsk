@@ -468,9 +468,9 @@ app.post('/answering', function (req, res, next) {
 })
 
 
-//For Settings in Profile
-app.get('/profile', passport.authenticate('jwt', { session: false }), function (req, res, next) {
-    res.render('profile', { username: req.session.username, message: '' });
+//For Settings in settings
+app.get('/settings', passport.authenticate('jwt', { session: false }), function (req, res, next) {
+    res.render('settings', { username: req.session.username, message: '' });
 })
 app.post('/updateUsername', function (req, res, next) {
     
@@ -479,12 +479,12 @@ app.post('/updateUsername', function (req, res, next) {
             console.log(err);
         if (doc != null) {
             console.log("Username already exists!");
-            res.render('profile', { message: 'Username already exists!' });
+            res.render('settings', { message: 'Username already exists!' });
         }
         else {
             users.userModel.where({ username: req.session.username }).updateOne({ $set: { username: req.body.username } }).exec();
             req.session.username = req.body.username;
-            res.redirect('/profile')
+            res.redirect('/settings')
         }
     })
 })
@@ -493,19 +493,19 @@ app.post('/updatename', function (req, res, next) {
     console.log(req.body.name);
     console.log(req.session.username);
     users.userModel.where({ username: req.session.username }).updateOne({ $set: { name: req.body.name } }).exec();
-    res.redirect('/profile');
+    res.redirect('/settings');
 })
 app.post('/updateemail', function (req, res, next) {
     console.log(req.body);
     console.log(req.session.username);
     users.userModel.where({ username: req.session.username }).updateOne({ $set: { email: req.body.email } }).exec();
-    res.redirect('/profile')
+    res.redirect('/settings')
 })
 app.post('/updatepassword', function (req, res, next) {
     console.log(req.body);
     console.log(req.session.username);
     users.userModel.where({ username: req.session.username }).updateOne({ $set: { password: req.body.password } }).exec();
-    res.redirect('/profile')
+    res.redirect('/settings')
 })
 
 //For image Uploads using multer
@@ -519,11 +519,14 @@ app.post('/updatepassword', function (req, res, next) {
 //     fs.rename(tempPath, targetPath,function(err){
 //         if(err)
 //             throw err;
-//         res.redirect('/profile');
+//         res.redirect('/settings');
 //     });
-//     res.redirect('/profile');
+//     res.redirect('/settings');
 // });
 
+app.get('/profile',function(req,res,next){
+    res.render('profile');
+})
 
 //For logout
 app.get('/logout', passport.authenticate('jwt', { session: false }), function (req, res, next) {
@@ -549,7 +552,7 @@ app.route('/feedback')
                 console.log(err);
             console.log('Feedback saved in the database!');
         })
-        res.redirect('/feedback')
+        res.redirect('/feedback');
     })
 
 //For running the server

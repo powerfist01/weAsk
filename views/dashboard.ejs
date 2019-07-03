@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 		.container-fluid {
 			padding-right: 0px;
@@ -55,13 +56,12 @@
 <body>
 	<div class="container-fluid">
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-			<a class="navbar-brand" href="/dashboard">weAsk</a>
+			<a class="navbar-brand" href="/dashboard" style="color:chartreuse; font-size: 30px;"><strong>weAsk</strong></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-right: 0%">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
 						<a class="nav-link" href="/dashboard" style="color: crimson;">Home <span
@@ -82,14 +82,17 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/profile" style="color: crimson;">Profile</a>
 					</li>
-					&nbsp;&nbsp;
-					<li class="nav-item">
-						<a class="nav-link" href="/logout" style="color: crimson;">Logout</a>
-					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"style="font-size:35px; padding-top:19px; color: red;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						  <a class="dropdown-item" href="/settings">Settings</a>
+						  <a class="dropdown-item" href="/logout">Logout</a>
+					  </li>
 				</ul>
 			</div>
 		</nav>
-		<div class="row" style="padding-bottom: 100px;">
+		<div class="row" style="position:relative;">
 			<div class="col-md-3">
 				<div>
 					<h3>Hello,<strong style="color: blueviolet;"><%= username %></strong></h3>
@@ -106,17 +109,18 @@
 			<div class="col-md-9">
 				<form method="POST" action="/posting" id="question">
 					<label for="comment" style="font-size: 25px; font-style:oblique">Question:</label>
-					<textarea class="form-control" name="question" rows="5" spellcheck="false" required></textarea>
+					<textarea class="form-control" name="question" rows="5" spellcheck="false" style="border: 2px solid blue;" required></textarea>
 					<br>
-					<button id="post">Post</button>
+					<button id="post">Ask</button>
 				</form>
 				<form class="form" method="POST"  action="/storyPost" id="story" style="display: none;">
 					<label for="story" style="font-size: 25px; font-style:oblique">Story:</label>
 					<br>
-					<input type="text" placeholder="Your Story topic" name="topic" style="color: black;" required>
+					<input type="text" placeholder=" Topic" name="topic" style="color: black; border: 2px solid blue;
+					border-radius: 2px;" required>
 					<br>
 					<br>
-					<textarea class="form-control" name="content" rows="5" spellcheck="false" required></textarea>
+					<textarea class="form-control" name="content" rows="5" spellcheck="false" style="border: 2px solid blue;" required></textarea>
 					<br>
 					<button id="post">Post</button>
 				</form>
