@@ -58,6 +58,7 @@ app.get('/', function (req, res, next) {
     if (token) {
         var decoded = jwt.decode(token, { complete: true });
         req.session.username = decoded.payload.username;
+        req.session.userid = decoded.payload._id;
         res.redirect('/dashboard');
     }
     else
@@ -96,6 +97,7 @@ app.route('/login')
         if (token) {
             var decoded = jwt.decode(token, { complete: true });
             req.session.username = decoded.payload.username;
+            req.session.userid = decoded.payload._id;
             res.redirect('/dashboard');
         }
         else {
@@ -166,7 +168,7 @@ app.route('/forgotPass')
         var mailOptions = {
             from: 'noreply@gmail.com',
             to: req.body.id,
-            subject: 'Your OTP will expire in 10 minutes,not really :).',
+            subject: 'Your OTP will expire in 10 minutes,not really :)',
             text: OTP
         };
 
@@ -206,6 +208,12 @@ app.route('/changePass')
     })
 
 app.get('/dashboard', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
+    var token = req.cookies['jwt'];
+    if (token) {
+        var decoded = jwt.decode(token, { complete: true });
+        req.session.username = decoded.payload.username;
+        req.session.userid = decoded.payload._id;
+    }
     var res1 = await new Promise(function (resolve, reject) {
         question.qnaModel.find({}, function (err, ques) {
             if (err)
@@ -267,17 +275,10 @@ app.post('/upvote',function(req,res,next){
     var issue = req.body.issue;
     if(issue == 'story'){
         story.storyModel.where({ _id: req.session.storyId }).updateOne({ $inc:{ votes: 1} }).exec();
+        story.storyModel.where({ _id: req.session.storyId }).updateOne({ $push: {voter: req.session.username} }).exec();
+        users.userModel.where({username: req.session.username}).updateOne({$push: {story: req.session.storyTitle }}).exec();
     }
-    story.storyModel.find({ _id: req.session.storyId },{_id:0, votes : 1}, function (err,vote){
-        if(err)
-            throw err;
-        else{
-            res.json({  
-                vote: vote,
-                title: req.session.storyTitle
-            }); 
-        }
-    })
+    res.send('done');
 })
 
 app.post('/downvote',function(req,res,next){
@@ -285,18 +286,8 @@ app.post('/downvote',function(req,res,next){
     if(issue == 'story'){
         story.storyModel.where({ _id: req.session.storyId }).updateOne({ $inc:{ votes: -1} }).exec();
     }
-    story.storyModel.find({ _id: req.session.storyId },{_id:0, votes : 1}, function (err,vote){
-        if(err)
-            throw err;
-        else{
-            res.json({  
-                vote: vote,
-                title: req.session.storyTitle
-            }); 
-        }
-    })
+    res.send('done');
 })
-
 
 
 app.post('/getStory', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
@@ -309,10 +300,13 @@ app.post('/getStory', passport.authenticate('jwt', { session: false }), async fu
             if (err)
                 throw err;
             if (!oneStory)
-                console.log('Not Found')
+                console.log('Not Found');
             resolve(oneStory);
         })
     })
+    console.log(res1);
+    res1.uername = req.session.username;
+    //console.log(res1);
     res.send(res1);
 })
 
@@ -359,7 +353,7 @@ app.get('/extras', passport.authenticate('jwt', { session: false }), async funct
         }).sort({ votes: -1 }).limit(5)
     })
 
-    console.log(res4);
+    //console.log(res4);
 
     res.render('extras', { tvShows: res1, restraunts: res2, places: res3, movies: res4 });
 })

@@ -29,6 +29,11 @@
                         $('#content').text(data[0].content);
                         $('#totalLikes').text(data[0].votes);
                         $('#like').css({'font-size':'50px'});
+                        if(data[0].username in data[0].voter){
+                            $('#like').css({ 'color': 'blue' });
+                        } else {
+                            $('#like').css({ 'color': 'black' });
+                        }
                     } else {
                         $('#content').text('Loading...');
                         $('#totalLikes').text('');
