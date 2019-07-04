@@ -68,12 +68,6 @@
 								class="sr-only">(current)</span></a>
 					</li>&nbsp;&nbsp;
 					<li class="nav-item">
-						<a class="nav-link" href="/extras" style="color: crimson;">Extras</a>
-					</li>&nbsp;&nbsp;
-					<li class="nav-item">
-						<a class="nav-link" href="/story" style="color: crimson;">Stories</a>
-					</li>&nbsp;&nbsp;
-					<li class="nav-item">
 						<a class="nav-link" href="/trivia" style="color: crimson;">Trivia</a>
 					</li>&nbsp;&nbsp;
 					<li class="nav-item">
@@ -132,17 +126,24 @@
 			<div class="col-md-3">
 				<div class="card border-dark mb-3">
 					<div class="card-body text-dark" style="text-align: center;">
-						<h5 class="card-title"><a href="/story"
-								style="text-decoration-color: none; text-decoration:none;">Latest Stories</a></h5>
+						<h5 class="card-title">Extras For You</h5>
 						<table class="table table-striped" style="text-align: center">
 							<tbody>
-								<% 
-									for(var i=0; i < story.length; i++) { %>
 								<tr>
-									<td><%= story[i].topic %></td>
+									<td><a href="/story">Stories</a></td>
 								</tr>
-								<%}	
-								%>
+								<tr>
+									<td><a href="/extras">Trending TV Shows</a></td>
+								</tr>
+								<tr>
+									<td><a href="/extras">Restraunts Near You</a></td>
+								</tr>
+								<tr>
+									<td><a href="/extras">Places to Visit</a></td>
+								</tr>
+								<tr>
+									<td><a href="/extras">Trending Movies</a></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
