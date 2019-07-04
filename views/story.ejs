@@ -25,7 +25,7 @@
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         var data = JSON.parse(this.responseText);
-                        //console.log(data);
+                        console.log(data);
                         $('#content').text(data[0].content);
                         $('#totalLikes').text(data[0].votes);
                         $('#like').css({'font-size':'50px'});

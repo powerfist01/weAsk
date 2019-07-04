@@ -97,7 +97,7 @@ app.route('/login')
         if (token) {
             var decoded = jwt.decode(token, { complete: true });
             req.session.username = decoded.payload.username;
-            req.session.userid = decoded.payload._id;
+            req.session.userid = decoded.payload.id;
             res.redirect('/dashboard');
         }
         else {
@@ -113,6 +113,7 @@ app.route('/login')
                 if (doc.password === req.body.password) {
                     req.session.username = req.body.username;
                     var payload = {
+                        id: doc._id,
                         username: doc.username,
                         password: doc.password,
                         email: doc.email
@@ -212,8 +213,9 @@ app.get('/dashboard', passport.authenticate('jwt', { session: false }), async fu
     if (token) {
         var decoded = jwt.decode(token, { complete: true });
         req.session.username = decoded.payload.username;
-        req.session.userid = decoded.payload._id;
+        req.session.userid = decoded.payload.id;
     }
+    console.log(decoded.payload)
     var res1 = await new Promise(function (resolve, reject) {
         question.qnaModel.find({}, function (err, ques) {
             if (err)
@@ -274,8 +276,7 @@ app.get('/allStories',  async function (req, res, next) {
 app.post('/upvote',function(req,res,next){
     var issue = req.body.issue;
     if(issue == 'story'){
-        story.storyModel.where({ _id: req.session.storyId }).updateOne({ $inc:{ votes: 1} }).exec();
-        story.storyModel.where({ _id: req.session.storyId }).updateOne({ $push: {voter: req.session.username} }).exec();
+        story.storyModel.where({ _id: req.session.storyId }).updateMany({ $inc:{ votes: 1}, $push: {voter: req.session.username} }).exec();
         users.userModel.where({username: req.session.username}).updateOne({$push: {story: req.session.storyTitle }}).exec();
     }
     res.send('done');
@@ -305,8 +306,8 @@ app.post('/getStory', passport.authenticate('jwt', { session: false }), async fu
         })
     })
     console.log(res1);
-    res1.uername = req.session.username;
-    //console.log(res1);
+    res1[0].uername = req.session.username;
+    console.log(res1);
     res.send(res1);
 })
 
