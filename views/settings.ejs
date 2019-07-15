@@ -79,7 +79,7 @@
 						<div class="card-body">
 							<h5 class="card-title">Enter your new Username:</h5>
 							<form method="post" action="/updateUsername">
-								<input type="text" spellcheck="false" class="form-control" name="username">
+								<input type="text" spellcheck="false" class="form-control" name="username" required>
 								<br>
 								<input type="submit" value="Save">
 							</form>
@@ -92,7 +92,7 @@
 						<div class="card-body">
 							<h5 class="card-title">Edit your name:</h5>
 							<form method="post" action="/updateName">
-								<input type="text" spellcheck="false" class="form-control" name="name">
+								<input type="text" spellcheck="false" class="form-control" name="name" required>
 								<br>
 								<input type="submit" value="Save">
 							</form>
@@ -105,7 +105,7 @@
 						<div class="card-body">
 							<h5 class="card-title">Update your Email:</h5>
 							<form method="post" action="/updateEmail">
-								<input type="text" spellcheck="false" class="form-control" name="email">
+								<input type="text" spellcheck="false" class="form-control" name="email" required>
 								<br>
 								<input type="submit" value="Save">
 							</form>
@@ -119,10 +119,10 @@
 							<h5 class="card-title">Change your Password:</h5>
 							<form method="post" action="/updatePassword">
 								<input id="pass" type="password" spellcheck="false" class="form-control"
-									name="password">
+									name="password" required>
 								<br>
 								<input id="pass1" type="password" spellcheck="false" class="form-control"
-									name="password1">
+									name="password1" required>
 								<br>
 								<input disabled id="passButton" type="submit" value="Save">
 							</form>
