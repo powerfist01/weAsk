@@ -8,7 +8,14 @@ const user = new Schema({
 	email: String,
     password: String,
     branch: String,
-    story: Array
+    story: Array,
+    myStories: Array,
+    myQuestions: Array,
+    myPlaces: Array,
+    myMovies: Array,
+    myFeedbacks: Array,
+    myRestraunts: Array,
+    myTVShows: Array
 }); 
 
 var userModel = mongoose.model('User', user);

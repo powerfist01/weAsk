@@ -47,6 +47,79 @@
 					$('#passButton').prop('disabled', true);
 				}
 			})
+
+			$('#usernameButt').click(function(e){
+				e.preventDefault();
+				var obj = {
+					username: $('#username1').val()
+				}
+				
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+						$('#username1').val('')
+						alert('Username Changed!');	
+					}
+                };
+                xhr.open('POST', '/updateUsername', true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify(obj));
+			})
+
+			$('#nameButt').click(function(e){
+				e.preventDefault();
+				var obj = {
+					name: $('#name1').val()
+				}
+				
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+						$('#name1').val('')
+						alert('Name Changed!');	
+					}
+                };
+                xhr.open('POST', '/updateName', true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify(obj));
+			})
+
+			$('#emailButt').click(function(e){
+				e.preventDefault();
+				var obj = {
+					email: $('#email1').val()
+				}
+				
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+						$('#email1').val('')
+						alert('Email Changed!');	
+					}
+                };
+                xhr.open('POST', '/updateEmail', true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify(obj));
+			})
+
+			$('#passButton').click(function(e){
+				e.preventDefault();
+				var obj = {
+					password: $('#pass').val()
+				}
+				
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+						$('#pass').val('')
+						$('#pass1').val('')
+						alert('Password Changed!');	
+					}
+                };
+                xhr.open('POST', '/updatePassword', true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify(obj));
+			})
 		})
 	</script>
 </head>
@@ -78,10 +151,10 @@
 						<div class="card-header">Username</div>
 						<div class="card-body">
 							<h5 class="card-title">Enter your new Username:</h5>
-							<form method="post" action="/updateUsername">
-								<input type="text" spellcheck="false" class="form-control" name="username" required>
+							<form method="post" action="#">
+								<input id="username1" type="text" spellcheck="false" class="form-control" name="username" required>
 								<br>
-								<input type="submit" value="Save">
+								<input id="usernameButt" type="submit" value="Save">
 							</form>
 						</div>
 					</div>
@@ -91,10 +164,10 @@
 						<div class="card-header">Name</div>
 						<div class="card-body">
 							<h5 class="card-title">Edit your name:</h5>
-							<form method="post" action="/updateName">
-								<input type="text" spellcheck="false" class="form-control" name="name" required>
+							<form method="post" action="#">
+								<input id="name1" type="text" spellcheck="false" class="form-control" name="name" required>
 								<br>
-								<input type="submit" value="Save">
+								<input id="nameButt" type="submit" value="Save">
 							</form>
 						</div>
 					</div>
@@ -104,10 +177,10 @@
 						<div class="card-header">Email</div>
 						<div class="card-body">
 							<h5 class="card-title">Update your Email:</h5>
-							<form method="post" action="/updateEmail">
-								<input type="text" spellcheck="false" class="form-control" name="email" required>
+							<form method="post" action="#">
+								<input id="email1" type="text" spellcheck="false" class="form-control" name="email" required>
 								<br>
-								<input type="submit" value="Save">
+								<input id="emailButt" type="submit" value="Save">
 							</form>
 						</div>
 					</div>
@@ -117,7 +190,7 @@
 						<div class="card-header">Password</div>
 						<div class="card-body">
 							<h5 class="card-title">Change your Password:</h5>
-							<form method="post" action="/updatePassword">
+							<form method="post" action="#">
 								<input id="pass" type="password" spellcheck="false" class="form-control"
 									name="password" required>
 								<br>
