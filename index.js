@@ -58,7 +58,8 @@ app.get('/', function (req, res, next) {
     if (token) {
         var decoded = jwt.decode(token, { complete: true });
         req.session.username = decoded.payload.username;
-        req.session.userid = decoded.payload._id;
+        req.session.userid = decoded.payload.id;
+        //console.log(req.session.userid);
         res.redirect('/dashboard');
     }
     else
@@ -112,6 +113,7 @@ app.route('/login')
             if (doc != null) {
                 if (doc.password === req.body.password) {
                     req.session.username = req.body.username;
+                    req.session.userid = decoded.payload.id;
                     var payload = {
                         id: doc._id,
                         username: doc.username,
@@ -277,7 +279,7 @@ app.post('/upvote',function(req,res,next){
     var issue = req.body.issue;
     if(issue == 'story'){
         story.storyModel.where({ _id: req.session.storyId }).updateMany({ $inc:{ votes: 1}, $push: {voter: req.session.username} }).exec();
-        users.userModel.where({username: req.session.username}).updateOne({$push: {story: req.session.storyTitle }}).exec();
+        users.userModel.where({_id: req.session.userid}).updateOne({$push: {story: req.session.storyTitle }}).exec();
     }
     res.send('done');
 })
@@ -467,8 +469,9 @@ app.post('/answering', function (req, res, next) {
 app.get('/settings', passport.authenticate('jwt', { session: false }), function (req, res, next) {
     res.render('settings', { username: req.session.username, message: '' });
 })
+
+
 app.post('/updateUsername', function (req, res, next) {
-    
     users.userModel.findOne({ username: req.body.username }, function (err, doc) {
         if (err)
             console.log(err);
@@ -477,7 +480,7 @@ app.post('/updateUsername', function (req, res, next) {
             res.render('settings', { message: 'Username already exists!' });
         }
         else {
-            users.userModel.where({ username: req.session.username }).updateOne({ $set: { username: req.body.username } }).exec();
+            users.userModel.where({ _id: req.session.userid }).updateOne({ $set: { username: req.body.username } }).exec();
             req.session.username = req.body.username;
             res.redirect('/settings')
         }
@@ -486,20 +489,19 @@ app.post('/updateUsername', function (req, res, next) {
 
 app.post('/updatename', function (req, res, next) {
     console.log(req.body.name);
-    console.log(req.session.username);
-    users.userModel.where({ username: req.session.username }).updateOne({ $set: { name: req.body.name } }).exec();
+    users.userModel.where({ _id: req.session.userid }).updateOne({ $set: { name: req.body.name } }).exec();
     res.redirect('/settings');
 })
+
 app.post('/updateemail', function (req, res, next) {
     console.log(req.body);
-    console.log(req.session.username);
-    users.userModel.where({ username: req.session.username }).updateOne({ $set: { email: req.body.email } }).exec();
+    users.userModel.where({ _id: req.session.userid }).updateOne({ $set: { email: req.body.email } }).exec();
     res.redirect('/settings')
 })
+
 app.post('/updatepassword', function (req, res, next) {
     console.log(req.body);
-    console.log(req.session.username);
-    users.userModel.where({ username: req.session.username }).updateOne({ $set: { password: req.body.password } }).exec();
+    users.userModel.where({ _id: req.session.userid }).updateOne({ $set: { password: req.body.password } }).exec();
     res.redirect('/settings')
 })
 
@@ -539,7 +541,8 @@ app.route('/feedback')
         var newFeedback = new feedback.feedbackModel({
             name: req.body.name,
             email: req.body.email,
-            feedback: req.body.message
+            feedback: req.body.message,
+            timestamp: Date()
         })
 
         newFeedback.save(function (err) {
