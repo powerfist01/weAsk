@@ -1,5 +1,7 @@
 # weAsk
-An easy to use and deploy web app built using Flask
+An easy to use and deploy web app built using Flask.
+
+Live at: https://weask.herokuapp.com
 
 # Features:
 
