@@ -113,7 +113,6 @@ app.route('/login')
             if (doc != null) {
                 if (doc.password === req.body.password) {
                     req.session.username = req.body.username;
-                    req.session.userid = decoded.payload.id;
                     var payload = {
                         id: doc._id,
                         username: doc.username,
