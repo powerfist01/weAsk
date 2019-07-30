@@ -1,17 +1,15 @@
 # weAsk
 An easy to use and deploy web app built using Flask.
 
-Live at: https://weask.herokuapp.com
+Go to the Site at: https://weask.herokuapp.com
 
 # Features:
-
 * Simple Web application, easy to use and *very* easy to deploy 
 * Written in simple Nodejs. Even a beginner Nodejs developer can contribute to this
 * Support for MongoDB, so you can easily play with it.
 * REST API for retrieving data easily.
 
 # Requirements:
-
 Clone the repository using the command:
 
 `git clone https://github.com/powerfist01/weAsk.git`
