@@ -12,7 +12,7 @@ Go to the Site at: https://weask.herokuapp.com
 # Requirements:
 Clone the repository using the command:
 
-`git clone https://github.com/powerfist01/weAsk.git`
+`git clone https://github.com/powerfist01/weAsk.git`  
 
 Execute the following command to install the npm packages:<br />
 
