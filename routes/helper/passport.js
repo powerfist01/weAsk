@@ -21,10 +21,11 @@ module.exports = function(passport) {
             if(err)
                 throw err;
             if(!user){
+                console.log('No User!');
                 return done(null, false);
             }
             else{
-                //console.log('User Found!');
+                console.log('User Found!');
                 return done(null,user);
             }
         })

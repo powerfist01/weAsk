@@ -10,8 +10,13 @@
 	<link rel="icon" href="../images/boat.png" type="image/x-icon">
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<link rel="stylesheet" href="../css/main.css" />
-	<link rel="stylesheet" href="../css/profile.css" />
+	<!-- <link rel="stylesheet" href="../css/profile.css" /> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<style>
+		a{
+			text-decoration: none;
+		}
+	</style>
 	<script>
 		$(document).ready(function () {
 			$('#usernam').click(function () {
@@ -48,77 +53,77 @@
 				}
 			})
 
-			$('#usernameButt').click(function(e){
+			$('#usernameButt').click(function (e) {
 				e.preventDefault();
 				var obj = {
 					username: $('#username1').val()
 				}
-				
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
+
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
 						$('#username1').val('')
-						alert('Username Changed!');	
+						alert('Username Changed!');
 					}
-                };
-                xhr.open('POST', '/updateUsername', true);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(JSON.stringify(obj));
+				};
+				xhr.open('POST', '/updateUsername', true);
+				xhr.setRequestHeader("Content-type", "application/json");
+				xhr.send(JSON.stringify(obj));
 			})
 
-			$('#nameButt').click(function(e){
+			$('#nameButt').click(function (e) {
 				e.preventDefault();
 				var obj = {
 					name: $('#name1').val()
 				}
-				
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
+
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
 						$('#name1').val('')
-						alert('Name Changed!');	
+						alert('Name Changed!');
 					}
-                };
-                xhr.open('POST', '/updateName', true);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(JSON.stringify(obj));
+				};
+				xhr.open('POST', '/updateName', true);
+				xhr.setRequestHeader("Content-type", "application/json");
+				xhr.send(JSON.stringify(obj));
 			})
 
-			$('#emailButt').click(function(e){
+			$('#emailButt').click(function (e) {
 				e.preventDefault();
 				var obj = {
 					email: $('#email1').val()
 				}
-				
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
+
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
 						$('#email1').val('')
-						alert('Email Changed!');	
+						alert('Email Changed!');
 					}
-                };
-                xhr.open('POST', '/updateEmail', true);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(JSON.stringify(obj));
+				};
+				xhr.open('POST', '/updateEmail', true);
+				xhr.setRequestHeader("Content-type", "application/json");
+				xhr.send(JSON.stringify(obj));
 			})
 
-			$('#passButton').click(function(e){
+			$('#passButton').click(function (e) {
 				e.preventDefault();
 				var obj = {
 					password: $('#pass').val()
 				}
-				
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
+
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
 						$('#pass').val('')
 						$('#pass1').val('')
-						alert('Password Changed!');	
+						alert('Password Changed!');
 					}
-                };
-                xhr.open('POST', '/updatePassword', true);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(JSON.stringify(obj));
+				};
+				xhr.open('POST', '/updatePassword', true);
+				xhr.setRequestHeader("Content-type", "application/json");
+				xhr.send(JSON.stringify(obj));
 			})
 		})
 	</script>
@@ -131,9 +136,10 @@
 	</script>
 	<% } %>
 	<div class="container-fluid">
-		<div class="row">
+		<a href="/dashboard" style="font-size:40px;"><strong>weAsk</strong></a>
+		<div class="row" style="text-align: center; padding-left: 280px; padding-top: 250px;">
 			<div class="col-md-2">
-				<a href="/dashboard" style="font-size:40px; padding-left:4%;"><strong>weAsk</strong></a>
+
 				<div class="list-group" id="list-tab" role="tablist">
 					<a class="list-group-item list-group-item-action active" id="usernam" data-toggle="list" href="#"
 						role="tab" aria-controls="home">Username</a>
@@ -152,7 +158,8 @@
 						<div class="card-body">
 							<h5 class="card-title">Enter your new Username:</h5>
 							<form method="post" action="#">
-								<input id="username1" type="text" spellcheck="false" class="form-control" name="username" required>
+								<input id="username1" type="text" spellcheck="false" class="form-control"
+									name="username" required>
 								<br>
 								<input id="usernameButt" type="submit" value="Save">
 							</form>
@@ -165,7 +172,8 @@
 						<div class="card-body">
 							<h5 class="card-title">Edit your name:</h5>
 							<form method="post" action="#">
-								<input id="name1" type="text" spellcheck="false" class="form-control" name="name" required>
+								<input id="name1" type="text" spellcheck="false" class="form-control" name="name"
+									required>
 								<br>
 								<input id="nameButt" type="submit" value="Save">
 							</form>
@@ -178,7 +186,8 @@
 						<div class="card-body">
 							<h5 class="card-title">Update your Email:</h5>
 							<form method="post" action="#">
-								<input id="email1" type="text" spellcheck="false" class="form-control" name="email" required>
+								<input id="email1" type="text" spellcheck="false" class="form-control" name="email"
+									required>
 								<br>
 								<input id="emailButt" type="submit" value="Save">
 							</form>
@@ -191,8 +200,8 @@
 						<div class="card-body">
 							<h5 class="card-title">Change your Password:</h5>
 							<form method="post" action="#">
-								<input id="pass" type="password" spellcheck="false" class="form-control"
-									name="password" required>
+								<input id="pass" type="password" spellcheck="false" class="form-control" name="password"
+									required>
 								<br>
 								<input id="pass1" type="password" spellcheck="false" class="form-control"
 									name="password1" required>

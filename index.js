@@ -59,7 +59,7 @@ app.get('/', function (req, res, next) {
         var decoded = jwt.decode(token, { complete: true });
         req.session.username = decoded.payload.username;
         req.session.userid = decoded.payload.id;
-        //console.log(req.session.userid);
+        console.log(req.session.username);
         res.redirect('/dashboard');
     }
     else
@@ -244,7 +244,7 @@ app.get('/trivia', passport.authenticate('jwt', { session: false }), async funct
 })
 
 app.get('/talktosomeone', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
-    res.render('comingsoon');
+    res.redirect('http://localhost:3000/rooms');
 })
 
 app.get('/story', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
@@ -525,7 +525,7 @@ app.get('/profile',function(req,res,next){
 })
 
 //For logout
-app.get('/logout', passport.authenticate('jwt', { session: false }), function (req, res, next) {
+app.get('/logout', function (req, res, next) {
     req.session.destroy();
     res.cookie('jwt', '', { maxAge: 0 });
     res.redirect('/');
