@@ -244,7 +244,7 @@ app.get('/trivia', passport.authenticate('jwt', { session: false }), async funct
 })
 
 app.get('/talktosomeone', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
-    res.redirect('http://localhost:3000/rooms');
+    res.render('comingsoon')
 })
 
 app.get('/story', passport.authenticate('jwt', { session: false }), async function (req, res, next) {
