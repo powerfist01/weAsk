@@ -521,7 +521,7 @@ app.post('/updatepassword', function (req, res, next) {
 // });
 
 app.get('/profile',function(req,res,next){
-    res.render('profile',{message: ''});
+    res.render('comingsoon',{message: ''});
 })
 
 //For logout
