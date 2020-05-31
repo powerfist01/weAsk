@@ -84,14 +84,35 @@
 
 <body>
     <div class="container-fluid">
-        <div class="row" style="background-color:grey; height: 40px;">
-            <div class="col-md4"></div>
-            <div class="col-md-4" style="text-align: center; padding-top: 5px;">
-                <a href="/dashboard" style="text-decoration:none;"><strong style="font-size: 20px">weAsk</strong></a>
-            </div>
-
-            <div class="col-md-4"></div>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+			<a class="navbar-brand" href="/dashboard" style="color:rgb(11, 65, 243); font-size: 50px;"><strong>weAsk</strong></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-left: 77%">
+				<ul class="navbar-nav mr-auto">
+					<!-- <li class="nav-item active">
+						<a class="nav-link" href="/dashboard" style="color: crimson;">Home <span
+								class="sr-only">(current)</span></a>
+					</li>&nbsp;&nbsp; -->
+					
+					<li class="nav-item">
+						<a class="nav-link" href="/settings" style="color: chartreuse; font-size: 30px;">Setting</a>
+					</li>&nbsp;&nbsp;
+					<li class="nav-item">
+						<a class="nav-link" href="/logout" style="color: chartreuse; font-size: 30px;">Logout</a>
+					</li>
+					<!-- <li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"style="font-size:35px; padding-top:19px; color: red;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						  <a class="dropdown-item" href="/settings">Settings</a>
+						  <a class="dropdown-item" href="/logout">Logout</a>
+					  </li> -->
+				</ul>
+			</div>
+		</nav>
 
         <div class="row">
             <div class="col-md-3">
