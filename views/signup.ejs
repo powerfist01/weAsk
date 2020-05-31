@@ -13,7 +13,6 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
 	<link rel="icon" href="../images/boat.png" type="image/x-icon">
-
 </head>
 <body>
 	<div class="main-w3layouts wrapper" style="padding-top: 0%">
@@ -22,7 +21,7 @@
 				<form action="/signup" method="post" style="padding-top: 0%; padding-bottom:0%">
 					<input class="text" type="text" name="username" placeholder="Username" required>
 					<input class="text email" type="text" name="name" placeholder="Fullname" required>
-					<input class="text email" type="email" name="email" placeholder="Email" required>
+					<input id="email" class="text email" type="email" name="email" placeholder="Email in @iiitu.ac.in" pattern=".+@iiitu.ac.in" required>
 					<input class="text email" type="text" name="rollno" placeholder="RollNo" required>
 					<input class="text email" type="text" name="branch" placeholder="Branch" required>
 					<input class="text" type="password" name="password" placeholder="Password" required>
